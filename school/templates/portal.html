@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block 'style' %}
+
+{% endblock %}
+{% block 'title' %}  {% endblock %}
+{% block 'content' %}
+    <h1 class="container my-5">Admin Portal</h1>
+    <div class="container d-flex flex-wrap">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+              <div class="card">
+                <img src="{% static 'img/total_students.svg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Total Students ({{total_students}})</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <a href="{% url 'display_students' %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="{% static 'img/total_staff.svg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Total Staff ({{total_staff}})</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <a href="{% url 'display_staff' %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="{% static 'img/class.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Classes And Timings</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                  <a href="{% url 'display_classes' %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="{% static 'img/genders.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Genders</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <a href="{% url 'display_genders' %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="{% static 'img/guardian.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Guardian Relation</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <a href="{% url 'display_guardian_relations' %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="{% static 'img/roles.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Roles</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <a href="{% url 'display_roles' %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="card">
+                <img src="{% static 'img/subjects.svg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Subjects</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <a href="{% url 'display_subjects' %}" class="btn btn-primary">View</a>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
