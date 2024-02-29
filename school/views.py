@@ -6,7 +6,6 @@ from django.contrib import messages
 from .models import Student, Staff, Grade, Gender, Role, Subject, EmploymentStatus, ClassAndTiming, GuardianRelation, ClassIncharge
 from django.contrib.auth.models import User
 
-
 # forms
 from django.contrib.auth.forms import UserCreationForm
 from .forms.user_creation_form import SignupForm
@@ -21,8 +20,8 @@ from .forms.add_role import AddRoleForm
 from .forms.add_subject_form import AddSubjectForm
 
 
-
 from django.contrib.auth import login, logout, authenticate 
+
 
 def home(request):
     return render(request, 'index.html')
@@ -101,7 +100,7 @@ def portal(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 '''
 ///////////////////////
 //   Students     //
@@ -118,7 +117,7 @@ def display_students(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')    
+        return redirect('login')
         
 def student_details(request,id):
     if request.user.is_authenticated:
@@ -130,7 +129,7 @@ def student_details(request,id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
     
 def add_student(request):
     if request.user.is_authenticated:
@@ -152,7 +151,7 @@ def add_student(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_student(request, id):
     if request.user.is_authenticated:
@@ -175,7 +174,7 @@ def edit_student(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def change_student_status(request, id):
     if request.user.is_authenticated:
@@ -190,7 +189,7 @@ def change_student_status(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_student(request, id):
     if request.user.is_authenticated:
@@ -204,7 +203,7 @@ def delete_student(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 '''
 ///////////////////////
@@ -222,7 +221,7 @@ def display_staff(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def staff_details(request, id):
     if request.user.is_authenticated:
@@ -234,7 +233,7 @@ def staff_details(request, id):
                 return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
     
 def change_staff_status(request, id):
     if request.user.is_authenticated:
@@ -249,7 +248,7 @@ def change_staff_status(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_staff(request):
     if request.user.is_authenticated:
@@ -271,7 +270,7 @@ def add_staff(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_staff(request, id):
     if request.user.is_authenticated:
@@ -294,7 +293,7 @@ def edit_staff(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_staff(request, id):
     if request.user.is_authenticated:
@@ -308,7 +307,7 @@ def delete_staff(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 '''
 //////////////////////////////////////
@@ -326,7 +325,7 @@ def display_classes(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def change_class_status(request, id):
     if request.user.is_authenticated:
@@ -341,7 +340,7 @@ def change_class_status(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
     
 def class_details(request, id):
     if request.user.is_authenticated:
@@ -353,7 +352,7 @@ def class_details(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_class(request):
     if request.user.is_authenticated:
@@ -382,7 +381,7 @@ def add_class(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_class(request, id):
     if request.user.is_authenticated:
@@ -405,7 +404,7 @@ def edit_class(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_class(request, id):
     if request.user.is_authenticated:
@@ -419,7 +418,7 @@ def delete_class(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 '''
 ////////////////////////////////////////
@@ -437,7 +436,7 @@ def display_class_incharges(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_class_incharge(request):
     if request.user.is_authenticated:
@@ -468,7 +467,7 @@ def add_class_incharge(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_class_incharge(request, id):
     if request.user.is_authenticated:
@@ -491,7 +490,7 @@ def edit_class_incharge(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_class_incharge(request, id):
     if request.user.is_authenticated:
@@ -505,7 +504,7 @@ def delete_class_incharge(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 '''
 ///////////////////////
@@ -523,7 +522,7 @@ def display_grades(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_grade(request):
     if request.user.is_authenticated:
@@ -545,7 +544,7 @@ def add_grade(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_grade(request, id):
     if request.user.is_authenticated:
@@ -568,7 +567,7 @@ def edit_grade(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
         
 def delete_grade(request, id):
     if request.user.is_authenticated:
@@ -582,7 +581,7 @@ def delete_grade(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 
 '''
@@ -601,7 +600,7 @@ def display_genders(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_gender(request):
     if request.user.is_authenticated:
@@ -628,7 +627,7 @@ def add_gender(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_gender(request, id):
     if request.user.is_authenticated:
@@ -651,7 +650,7 @@ def edit_gender(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_gender(request, id):
     if request.user.is_authenticated:
@@ -665,7 +664,7 @@ def delete_gender(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 '''
 //////////////////////////////////////
 //   Guardian Relation     //
@@ -682,7 +681,7 @@ def display_guardian_relations(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_guardian_relation(request):
     if request.user.is_authenticated:
@@ -709,7 +708,7 @@ def add_guardian_relation(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_guardian_relation(request, id):
     if request.user.is_authenticated:
@@ -732,7 +731,7 @@ def edit_guardian_relation(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_guardian_relation(request, id):
     if request.user.is_authenticated:
@@ -746,7 +745,7 @@ def delete_guardian_relation(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 '''
 ///////////////////////
@@ -764,7 +763,7 @@ def display_roles(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_role(request):
     if request.user.is_authenticated:
@@ -791,7 +790,7 @@ def add_role(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_role(request, id):
     if request.user.is_authenticated:
@@ -814,7 +813,7 @@ def edit_role(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_role(request, id):
     if request.user.is_authenticated:
@@ -828,7 +827,7 @@ def delete_role(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 '''
 ///////////////////////
@@ -846,7 +845,7 @@ def display_subjects(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def add_subject(request):
     if request.user.is_authenticated:
@@ -873,7 +872,7 @@ def add_subject(request):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def edit_subject(request, id):
     if request.user.is_authenticated:
@@ -896,7 +895,7 @@ def edit_subject(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 def delete_subject(request, id):
     if request.user.is_authenticated:
@@ -910,7 +909,7 @@ def delete_subject(request, id):
             return redirect('home')
     else:
         messages.warning(request, 'please login first!')
-        return redirect('home')
+        return redirect('login')
 
 '''
 ///////////////////////////////////////////////////////////////////////////////
@@ -925,8 +924,7 @@ def teacher_dashboard(request):
             if current_teacher is None:
                 messages.success(request, 'Only teachers are allowed to access this page.')
                 return redirect('home')
-            else:
-                incharge = ClassIncharge.objects.filter(teacher=current_teacher).first()
+            incharge = ClassIncharge.objects.filter(teacher=current_teacher).first()
             if incharge is None:
                 messages.warning(request, 'You are not the In-charge of any class.')
                 return redirect('teacher_dashboard')
