@@ -141,6 +141,9 @@ def add_student(request):
                 form = AddStudentForm(request.POST)
                 if form.is_valid():
                     form.save()
+
+
+                    
                     messages.success(request,'The student has been added successfully!')
                     return redirect('display_students')
                 else:
