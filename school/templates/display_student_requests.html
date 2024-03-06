@@ -1,0 +1,100 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block 'style' %}
+
+{% endblock %}
+{% block 'title' %} Students {% endblock %}
+{% block 'content' %}
+    <div class="container-fluid">
+        <div class="container my-5 d-flex align-items-center justify-content-between">
+            <h1>Students Requests</h1>
+            <a href="{% url 'update_seen_status_all' %}" class="btn btn-warning">update seen status</a>
+        </div>
+        <h2 class="fw-light text-danger">new</h2>
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>User Name</th>
+                    <th>Grade</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Info</th>
+                    <th>Seen</th>
+                    <th>Register</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in requests %}
+                    <tr>
+                        <th>{{student.id}}</th>
+                        <td>{{student.first_name}}</td>
+                        <td>{{student.last_name}}</td>
+                        <td>{{student.username}}</td>
+                        <td>{{student.grade}}</td>
+                        <td>{{student.age}}</td>
+                        <td>{{student.gender}}</td>
+                        <td>
+                            <a href="{% url 'student_request_details' student.id %}">
+                                <i class="fa-solid fa-circle-info fs-4"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'update_seen_status' student.id %}">
+                                <i class="fa-solid fa-circle-xmark fs-4 text-danger"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="fs-5" href="{% url 'register_request' student.id %}">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+        <h2 class="fw-light text-success">old</h2>
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>User Name</th>
+                    <th>Grade</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Info</th>
+                    <th>Register</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in requests_old %}
+                    <tr>
+                        <th>{{student.id}}</th>
+                        <td>{{student.first_name}}</td>
+                        <td>{{student.last_name}}</td>
+                        <td>{{student.username}}</td>
+                        <td>{{student.grade}}</td>
+                        <td>{{student.age}}</td>
+                        <td>{{student.gender}}</td>
+                        <td>
+                            <a href="{% url 'student_request_details' student.id %}">
+                                <i class="fa-solid fa-circle-info fs-4"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="fs-5" href="{% url 'register_request' student.id %}">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

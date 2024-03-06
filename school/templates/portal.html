@@ -12,7 +12,7 @@
               <div class="card">
                 <img src="{% static 'img/total_students.svg' %}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Total Students ({{total_students}})</h5>
+                  <h5 class="card-title">Total Students ({{total_students}}){% if student_applications is not 0 %} <sup style="color: white; height: 20px; padding-inline: 7px;" class="bg-danger fw-light rounded-circle">{{student_applications}}</sup>{% endif %} </h5>
                   <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   <a href="{% url 'display_students' %}" class="btn btn-primary">View</a>
                 </div>

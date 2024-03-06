@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 
+# form sending mails
+from django.core.mail import send_mail
+from django.conf import settings
+
 # models
-from .models import Student, Staff, Grade, Gender, Role, Subject, EmploymentStatus, ClassAndTiming, GuardianRelation, ClassIncharge
+from .models import Student, Staff, Grade, Gender, Role, Subject, EmploymentStatus, ClassAndTiming, GuardianRelation, ClassIncharge, FAQs, StudentApplication
 from django.contrib.auth.models import User
 
 # forms
@@ -18,6 +22,7 @@ from .forms.add_class_incharge import AddClassInchargeForm
 from .forms.add_guardian_relation_form import AddGuardianRelationForm
 from .forms.add_role import AddRoleForm
 from .forms.add_subject_form import AddSubjectForm
+from .forms.student_request import StudentRequestForm
 
 
 from django.contrib.auth import login, logout, authenticate 
@@ -30,7 +35,8 @@ def about(request):
     return render(request, 'about.html')
 
 def faqs(request):
-    return render(request, 'faqs.html')
+    data = FAQs.objects.filter(status=True)
+    return render(request, 'faqs.html', {'data': data})
 
 def contact(request):
     return render(request, 'contact.html')
@@ -39,41 +45,50 @@ def locations(request):
     return render(request, 'locations.html')
 
 def signup(request):
-    if request.method == 'GET':
-        form = SignupForm()
-        return render(request, 'signup.html', {'form': form})
-    else:
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Congratulations! You\'ve successfully signed up!')
-            return redirect('home')
+    # if not request.user.is_authenticated:
+        if request.method == 'GET':
+            form = StudentRequestForm()
+            return render(request, 'signup.html', {'form': form})
         else:
-            messages.error(request, 'Invalid entries! Please try again.')
-            return redirect('signup')
+            form = StudentRequestForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Congratulations! Your request has been passed to the Admin.')
+                return redirect('login')
+            else:
+                messages.error(request, 'Invalid entries! Please try again.')
+                return redirect('signup')
+    # else:
+    #     messages.error(request, 'The logged In user is not allowed to get the signup page.')
+    #     return redirect('home')
 
 def user_login(request):
-    if request.method == 'GET':
-        return render(request, 'login.html')
-    else:
-        if not request.user.is_authenticated:
-            username = request.POST['username']
-            password = request.POST['password']
-            if username and password:
-                user = authenticate(request, username=username, password=password)
-                if user is None:
-                    messages.error(request, 'User not found!')
-                    return redirect('login')
-                else:
-                    login(request, user)
-                    messages.success(request, 'User logged in successfully!')
-                    return redirect('home')
-            else:
-                messages.error(request, 'Please enter both username and password!')
-                return redirect('login')
+    if not request.user.is_authenticated:
+        if request.method == 'GET':
+            return render(request, 'login.html')
         else:
-            messages.warning(request, 'You have already logged in!')
-            return redirect('home')
+            if not request.user.is_authenticated:
+                username = request.POST['username']
+                password = request.POST['password']
+                if username and password:
+                    user = authenticate(request, username=username, password=password)
+                    if user is None:
+                        messages.error(request, 'User not found!')
+                        return redirect('login')
+                    else:
+                        login(request, user)
+                        messages.success(request, 'User logged in successfully!')
+                        return redirect('home')
+                else:
+                    messages.error(request, 'Please enter both username and password!')
+                    return redirect('login')
+            else:
+                messages.warning(request, 'You have already logged in!')
+                return redirect('home')
+    else:
+        messages.error(request, 'You are already logged In!')
+        return redirect('home')
+
 
 def user_logout(request):
     if request.user.is_authenticated:
@@ -92,9 +107,10 @@ def user_logout(request):
 def portal(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
+            student_applications = StudentApplication.objects.filter(seen=False, is_registered=False).count()
             total_students = Student.objects.count()
             total_staff = Staff.objects.count()
-            return render(request, 'portal.html', {'total_students': total_students, 'total_staff': total_staff})
+            return render(request, 'portal.html', {'total_students': total_students, 'total_staff': total_staff, 'student_applications': student_applications})
         else:
             messages.warning(request, 'This page is for admins only!')
             return redirect('home')
@@ -107,11 +123,13 @@ def portal(request):
 ///////////////////////
 ''' 
 
+
 def display_students(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             data = Student.objects.all()
-            return render(request, 'display_students.html', {'data': data})
+            student_applications = StudentApplication.objects.filter(seen=False, is_registered=False).count()
+            return render(request, 'display_students.html', {'data': data, 'student_applications': student_applications})
         else:
             messages.warning(request, 'This page is for admin only!')
             return redirect('home')
@@ -130,7 +148,27 @@ def student_details(request,id):
     else:
         messages.warning(request, 'please login first!')
         return redirect('login')
-    
+
+# -----------------------------------------------------------------------------------------------------------
+# send email function
+def send_email(username, email, password):
+    subject = 'Student Credentials!'
+    message = f"""This email is sent you to give your credentials. 
+    username = {username}
+    password = {password} """
+    form = 'mhmdfrrukh13@gmail.com'
+    to = [str(email)]
+    send_mail(subject,message,form,to)
+
+# password generating function
+def generate_password(length):
+    import random
+    import string
+    chars = string.ascii_letters + string.digits
+    password = ''.join(random.choice(chars) for _ in range(length))
+    return password
+# -----------------------------------------------------------------------------------------------------------
+
 def add_student(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
@@ -139,14 +177,26 @@ def add_student(request):
                 return render(request, 'add_student.html', {'form': form})
             else:
                 form = AddStudentForm(request.POST)
-                if form.is_valid():
+                signup_form = SignupForm(request.POST)
+                if form.is_valid() and signup_form.is_valid() and request.POST['password1']==request.POST['password2']:
                     form.save()
-
-
-                    
+                    cleaned_data = form.cleaned_data
+                    password = generate_password(10)
+                    cleaned_data['password1'] = password
+                    cleaned_data['password2'] = password
+                    signup_form = SignupForm(cleaned_data)
+                    signup_form.save()
+                    username = request.POST['username']
+                    email = request.POST['email']
+                    send_email(username,  email, password)
+                    if StudentApplication.objects.filter(username=username).exists():
+                        current_student = StudentApplication.objects.get(username=username)
+                        current_student.is_registered = True
+                        current_student.save()
                     messages.success(request,'The student has been added successfully!')
                     return redirect('display_students')
                 else:
+                    # return HttpResponse(signup_form.errors)
                     messages.error(request, 'Please enter the valid Information!')
                     return redirect('add_student')
         else:
@@ -207,6 +257,35 @@ def delete_student(request, id):
     else:
         messages.warning(request, 'please login first!')
         return redirect('login')
+
+
+def student_requests(request):
+    requests = StudentApplication.objects.filter(seen=False, is_registered=False)
+    requests_old = StudentApplication.objects.filter(seen=True, is_registered=False)
+    return render(request, 'display_student_requests.html', { 'requests' : requests, 'requests_old': requests_old })
+
+def student_request_details(request, id):
+    student = StudentApplication.objects.get(pk=id)
+    return render(request, 'student_request_details.html', {'student': student})
+
+def update_seen_status_all(request):
+    all_requests = StudentApplication.objects.all()
+    for i in all_requests:
+        i.seen = True
+        i.save()
+    return redirect('student_requests')
+
+def update_seen_status(request, id):
+    current_student = StudentApplication.objects.get(id=id)
+    current_student.seen = True
+    current_student.save()
+    return redirect('student_requests')
+
+
+def request_register(request, id):
+    current_student = StudentApplication.objects.get(pk=id)
+    form = AddStudentForm(instance=current_student)
+    return render(request, 'add_student.html', { 'form':form })
 
 '''
 ///////////////////////
@@ -964,3 +1043,7 @@ def student_dashboard(request):
     else:
         messages.warning(request, 'Please login first!')
         return redirect('login')
+    
+
+
+

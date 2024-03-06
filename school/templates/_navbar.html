@@ -1,4 +1,4 @@
-<div style="width: 100%; height: 104px;"></div>
+<div style="width: 100%;" class="nav_space_cover"></div>
 <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">Wisdom's harbor</a>
@@ -12,14 +12,16 @@
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'locations' %}">Locations</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'faqs' %}">FAQs</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'contact' %}">Contact</a></li>
-                {% if user.is_superuser %}
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" href="{% url 'portal' %}">*Portal</a></li>
-                {% elif user.is_staff %}
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" href="{% url 'teacher_dashboard' %}">*Portal</a></li>
-                {% else %}
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" href="{% url 'student_dashboard' %}">*Portal</a></li>
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" href="{% url 'portal' %}">*Portal</a></li>
+                    {% elif user.is_staff %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" href="{% url 'teacher_dashboard' %}">*Portal</a></li>
+                    {% else %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" href="{% url 'student_dashboard' %}">*Portal</a></li>
+                    {% endif %}
                 {% endif %}
-
+                
                 {% if not user.is_authenticated %}
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'login' %}">Login</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'signup' %}">Sign up</a></li>

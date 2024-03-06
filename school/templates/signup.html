@@ -6,8 +6,11 @@
 {% block 'title' %} Signup {% endblock %}
 {% block 'content' %}
     <div class="contianer d-flex align-items-center justify-content-center flex-column">
-        <div class="m-5">
-            <h1>Signup</h1>
+        <div class="m-5 w-50">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2>Student Signup</h2>
+                <!-- <a href="#" class="btn btn-outline-dark btn-sm text-nowrap" style="font-size: small;">Staff Signup</a> -->
+            </div>
             <form action="{% url 'signup' %}" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}

@@ -24,6 +24,14 @@ urlpatterns = [
     path('student/edit/<int:id>/', views.edit_student, name='edit_student'),
     path('student/delete/<int:id>/', views.delete_student, name='delete_student'),
     path('student/status/change/<int:id>/', views.change_student_status, name='change_student_status'),
+    # new student requests
+    path('student/requests/display/', views.student_requests, name='student_requests'),
+    path('student/requests/details/<int:id>/', views.student_request_details, name='student_request_details'),
+    path('student/requests/seen/update/', views.update_seen_status_all, name='update_seen_status_all'), 
+    path('student/seen/update/<int:id>/', views.update_seen_status, name='update_seen_status'),
+    path('student/register/<int:id>/', views.request_register, name='register_request'),
+
+
     # Staff
     # ----------------------------------------------------------------
     path('staff/display/', views.display_staff, name='display_staff'),

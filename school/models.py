@@ -30,7 +30,9 @@ class GuardianRelation(models.Model):
 
 
 class Student(models.Model):
-    name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, default="Name")
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    username = models.CharField(max_length=255, default='')
     grade = models.ForeignKey(Grade, on_delete= models.CASCADE)
     age = models.IntegerField()
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
@@ -44,6 +46,25 @@ class Student(models.Model):
     emergency_phone = models.CharField(max_length=100)
     previous_school = models.CharField(max_length=200, null=True, blank=True)
     status = models.BooleanField(default=True)
+
+class StudentApplication(models.Model):
+    first_name = models.CharField(max_length=255, default="Name")
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    username = models.CharField(max_length=255, default='')
+    grade = models.ForeignKey(Grade, on_delete= models.CASCADE)
+    age = models.IntegerField()
+    gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
+    dob = models.DateField()
+    guardian_name = models.CharField(max_length=255)
+    guardian_relation = models.ForeignKey(GuardianRelation, on_delete=models.CASCADE)
+    address = models.CharField(max_length=500)
+    email = models.EmailField()
+    phone = models.CharField(max_length=100)
+    emergency_phone = models.CharField(max_length=100)
+    previous_school = models.CharField(max_length=200, null=True, blank=True)
+    is_registered = models.BooleanField(default=False)
+    seen = models.BooleanField(default=False)
+
 
 '''
 ///////////////////////
@@ -65,6 +86,8 @@ class EmploymentStatus(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name_plural = 'Employment Status'
 
 class Staff(models.Model):
     name = models.CharField(max_length=255)
@@ -88,18 +111,14 @@ class Staff(models.Model):
     def __str__(self):
         return f'{self.id}---{self.name}'
     
-
-
-
-
+    class Meta:
+        verbose_name_plural = 'Staff'
+    
 '''
 ///////////////////////
 //   Class and timing     //
 ///////////////////////
 '''
-
-
-
 
 class ClassAndTiming(models.Model):
     class_name = models.ForeignKey(Grade, on_delete=models.SET_NULL, null=True)
@@ -136,9 +155,15 @@ class ClassAndTiming(models.Model):
     def __str__(self):
         return f'{self.id}---{self.class_name}'
 
-
-
 class ClassIncharge(models.Model):
     teacher = models.ForeignKey(Staff, on_delete = models.CASCADE)
     class_obj = models.ForeignKey(ClassAndTiming, on_delete = models.CASCADE)
 
+
+class FAQs(models.Model):
+    question = models.TextField()
+    answer = models.TextField()
+    status = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = 'FAQs'

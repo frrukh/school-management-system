@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Gender, Grade, GuardianRelation,Student, Role, Subject, EmploymentStatus, Staff, ClassAndTiming, Staff, ClassIncharge
+from .models import Gender, Grade, GuardianRelation,Student, Role, Subject, EmploymentStatus, Staff, ClassAndTiming, Staff, ClassIncharge, FAQs, StudentApplication
 # Register your models here.
 
 '''
@@ -20,13 +20,18 @@ class GuardianRelationAdmin(admin.ModelAdmin):
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'grade', 'age', 'gender', 'dob','guardian_name', 'guardian_relation', 'date_of_enrollment', 'email', 'phone','emergency_phone' , 'previous_school', 'status')
+    list_display = ('id', 'first_name', 'last_name', 'grade', 'age', 'gender', 'dob','guardian_name', 'guardian_relation', 'address', 'date_of_enrollment', 'email', 'phone','emergency_phone' , 'previous_school', 'status')
+
+
+class StudentApplicationAdmin(admin.ModelAdmin):
+    list_display = ('id', 'first_name', 'last_name', 'username' ,'grade', 'age', 'gender', 'dob','guardian_name', 'guardian_relation', 'address', 'email', 'phone','emergency_phone' , 'previous_school', 'is_registered', 'seen')
 
 
 admin.site.register(Gender, GenderAdmin)
 admin.site.register(Grade, GradeAdmin)
 admin.site.register(GuardianRelation, GuardianRelationAdmin)
 admin.site.register(Student, StudentAdmin)
+admin.site.register(StudentApplication, StudentApplicationAdmin)
 '''
 ///////////////////////
 //   Staff     //
@@ -66,3 +71,17 @@ class ClassInchargeAdmin(admin.ModelAdmin):
 
 admin.site.register(ClassAndTiming, ClassAndTimingAdmin)
 admin.site.register(ClassIncharge, ClassInchargeAdmin)
+
+
+'''
+///////////////////////////
+//   FAQs     //
+///////////////////////////
+'''
+
+class FAQsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'question', 'answer', 'status')
+
+
+admin.site.register(FAQs, FAQsAdmin)
+
