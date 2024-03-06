@@ -88,13 +88,13 @@ urlpatterns = [
     path('guardian/relation/delete/<int:id>/', views.delete_guardian_relation, name='delete_guardian_relation'),
 
 
-    # Roles
+    # Designations
     # ----------------------------------------------------------------
 
-    path('roles/display/', views.display_roles, name='display_roles'),
-    path('role/add/', views.add_role, name='add_role'),
-    path('role/edit/<int:id>/', views.edit_role, name='edit_role'),
-    path('role/delete/<int:id>/', views.delete_role, name='delete_role'),
+    path('designations/display/', views.display_designations, name='display_designations'),
+    path('designation/add/', views.add_designation, name='add_designation'),
+    path('designation/edit/<int:id>/', views.edit_designation, name='edit_designation'),
+    path('designation/delete/<int:id>/', views.delete_designation, name='delete_designation'),
 
 
     # Subjects

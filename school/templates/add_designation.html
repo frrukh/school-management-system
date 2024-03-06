@@ -3,14 +3,14 @@
 {% block 'style' %}
 
 {% endblock %}
-{% block 'title' %} Add Role {% endblock %}
+{% block 'title' %} Add Designation {% endblock %}
 {% block 'content' %}
     <div class="container d-flex align-items-center justify-content-center flex-column ">
         <div class="container d-flex align-items-center justify-content-between">
-            <h1 class="my-5">Add Role</h1>
-            <a href="{% url 'display_roles' %}" class="btn btn-primary">Display Roles</a>
+            <h1 class="my-5">Add Designation</h1>
+            <a href="{% url 'display_designations' %}" class="btn btn-primary">Display Designations</a>
         </div>
-        <form class="w-50 mt-3" action="{% url 'add_role' %}" method="POST">
+        <form class="w-50 mt-3" action="{% url 'add_designation' %}" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
             <button class="btn btn-success my-3">Submit</button>

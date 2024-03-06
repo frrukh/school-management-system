@@ -23,7 +23,7 @@
                 {% for incharge in data %}
                     <tr>
                         <th>{{incharge.id}}</th>
-                        <td>{{incharge.teacher.name}}</td> 
+                        <td>{{incharge.teacher.username}}</td> 
                         <td>{{incharge.class_obj.class_name}}</td> 
                         <td>
                             <a href="{% url 'edit_class_incharge' incharge.id %}">

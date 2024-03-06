@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Gender, Grade, GuardianRelation,Student, Role, Subject, EmploymentStatus, Staff, ClassAndTiming, Staff, ClassIncharge, FAQs, StudentApplication
+from .models import Gender, Grade, GuardianRelation,Student, Designation, Subject, EmploymentStatus, Staff, ClassAndTiming, Staff, ClassIncharge, FAQs, StudentApplication
 # Register your models here.
 
 '''
@@ -38,7 +38,7 @@ admin.site.register(StudentApplication, StudentApplicationAdmin)
 ///////////////////////
 '''
 
-class RoleAdmin(admin.ModelAdmin):
+class DesignationAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -48,9 +48,9 @@ class EmployStatusAdmin(admin.ModelAdmin):
     list_display = ('id','name')
 
 class StaffAdmin(admin.ModelAdmin):
-    list_display = ('id', 'dob', 'gender', 'qualification', 'experience', 'role', 'subject', 'email', 'phone', 'emergency_phone', 'address', 'joining_date', 'salary', 'employment_status', 'contract_details', 'status')
+    list_display = ('id', 'first_name', 'last_name','dob', 'gender', 'qualification', 'experience', 'designation', 'subject', 'email', 'phone', 'emergency_phone', 'address', 'joining_date', 'salary', 'employment_status', 'contract_details', 'status')
 
-admin.site.register(Role, RoleAdmin)
+admin.site.register(Designation, DesignationAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(EmploymentStatus, EmployStatusAdmin)
 admin.site.register(Staff, StaffAdmin)

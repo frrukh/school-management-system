@@ -3,19 +3,19 @@
 {% block 'style' %}
 
 {% endblock %}
-{% block 'title' %} Edit Role {% endblock %}
+{% block 'title' %} Edit Designation {% endblock %}
 {% block 'content' %}
     <div class="container d-flex flex-column align-items-center">
         <div class="my-5 d-flex align-items-center justify-content-between w-100">
-            <h1>Edit Role</h1>
-            <a href="{% url 'display_roles' %}" class="btn btn-primary">Display Roles</a>
+            <h1>Edit Designation</h1>
+            <a href="{% url 'display_designations' %}" class="btn btn-primary">Display Designations</a>
         </div>
-        <form action="{% url 'edit_role' id %}" method="POST" class="w-50">
+        <form action="{% url 'edit_designation' id %}" method="POST" class="w-50">
             {% csrf_token %}
             {{ form.as_p }}
             <div class="d-flex align-items-center justify-content-between ">
                 <button class="btn btn-success my-5">Update</button>
-                <a href="{% url 'delete_role' id %}" class="shadow-lg btn btn-danger">Delete role</a>
+                <a href="{% url 'delete_designation' id %}" class="shadow-lg btn btn-danger">Delete Designation</a>
             </div>
         </form>
     </div>

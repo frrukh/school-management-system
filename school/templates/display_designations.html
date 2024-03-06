@@ -3,12 +3,12 @@
 {% block 'style' %}
 
 {% endblock %}
-{% block 'title' %} Roles {% endblock %}
+{% block 'title' %} Designations {% endblock %}
 {% block 'content' %}
     <div class="container-fluid">
         <div class="container my-5 d-flex align-items-center justify-content-between">
-            <h1>Roles</h1>
-            <a href="{% url 'add_role' %}" class="btn btn-success">Add Role</a>
+            <h1>Designation</h1>
+            <a href="{% url 'add_designation' %}" class="btn btn-success">Add Designation</a>
         </div>
         <table class="table table-striped text-center">
             <thead>
@@ -19,12 +19,12 @@
                 </tr>
             </thead>
             <tbody>
-                {% for role in data %}
+                {% for designation in data %}
                     <tr>
-                        <th>{{role.id}}</th>
-                        <td>{{role.name}}</td> 
+                        <th>{{designation.id}}</th>
+                        <td>{{designation.name}}</td> 
                         <td>
-                            <a style="color: transparent;" href="{% url 'edit_role' role.id %}">
+                            <a style="color: transparent;" href="{% url 'edit_designation' designation.id %}">
                                 <i class="fa-solid fa-pen fs-5 text-secondary"></i>
                             </a>
                         </td>

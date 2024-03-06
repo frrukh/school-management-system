@@ -72,7 +72,7 @@ class StudentApplication(models.Model):
 ///////////////////////
 '''
 
-class Role(models.Model):
+class Designation(models.Model):
     name = models.CharField(max_length=255)
     def __str__(self):
         return self.name
@@ -90,13 +90,15 @@ class EmploymentStatus(models.Model):
         verbose_name_plural = 'Employment Status'
 
 class Staff(models.Model):
-    name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, default='')
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    username = models.CharField(max_length=255, default='')
     age = models.IntegerField()
     dob = models.DateField()
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE)
     qualification = models.CharField(max_length=255) 
     experience = models.CharField(max_length=255, null=True, blank=True) 
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    designation = models.ForeignKey(Designation, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField()
     phone = models.CharField(max_length=100)
@@ -109,7 +111,7 @@ class Staff(models.Model):
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{self.id}---{self.name}'
+        return f'{self.id}---{self.username}'
     
     class Meta:
         verbose_name_plural = 'Staff'

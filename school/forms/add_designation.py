@@ -1,9 +1,9 @@
 from django import forms
-from ..models import Role
+from ..models import Designation
 
 
-class AddRoleForm(forms.ModelForm):
+class AddDesignationForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'autofocus': True}))
     class Meta:
-        model = Role
+        model = Designation
         fields = ('id', 'name')

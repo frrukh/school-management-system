@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 # models
-from .models import Student, Staff, Grade, Gender, Role, Subject, EmploymentStatus, ClassAndTiming, GuardianRelation, ClassIncharge, FAQs, StudentApplication
+from .models import Student, Staff, Grade, Gender, Designation, Subject, EmploymentStatus, ClassAndTiming, GuardianRelation, ClassIncharge, FAQs, StudentApplication
 from django.contrib.auth.models import User
 
 # forms
@@ -20,7 +20,7 @@ from .forms.add_class_and_timing import AddClassAndTimingForm
 from .forms.add_gender_form import AddGenderForm
 from .forms.add_class_incharge import AddClassInchargeForm
 from .forms.add_guardian_relation_form import AddGuardianRelationForm
-from .forms.add_role import AddRoleForm
+from .forms.add_designation import AddDesignationForm
 from .forms.add_subject_form import AddSubjectForm
 from .forms.student_request import StudentRequestForm
 
@@ -153,7 +153,7 @@ def student_details(request,id):
 # send email function
 def send_email(username, email, password):
     subject = 'Student Credentials!'
-    message = f"""This email is sent you to give your credentials. 
+    message = f"""Dear Student! This email is sent you to give your credentials. 
     username = {username}
     password = {password} """
     form = 'mhmdfrrukh13@gmail.com'
@@ -332,6 +332,16 @@ def change_staff_status(request, id):
         messages.warning(request, 'please login first!')
         return redirect('login')
 
+# send mail function for staff members
+def send_email_staff(username, email, password):
+    subject = 'Staff Credentials!'
+    message = f"""Dear Staff Member! This email is sent you to give your credentials. 
+    username = {username}
+    password = {password} """
+    form = 'mhmdfrrukh13@gmail.com'
+    to = [str(email)]
+    send_mail(subject,message,form,to)
+
 def add_staff(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
@@ -341,9 +351,23 @@ def add_staff(request):
             else:
                 form = AddStaffForm(request.POST)
                 if form.is_valid():
-                    form.save()
-                    messages.success(request, 'New staff added successfully!')
-                    return redirect('display_staff')
+                    cleaned_data = form.cleaned_data
+                    password = generate_password(8)
+                    cleaned_data['password1'] = password
+                    cleaned_data['password2'] = password
+                    signup_form = SignupForm(cleaned_data)
+                    if signup_form.is_valid():
+                        form.save()
+                        signup_form.save()
+                        username = cleaned_data['username']
+                        email = cleaned_data['email']
+                        send_email_staff(username, email, password)
+                        messages.success(request, 'New staff added successfully!')
+                        return redirect('display_staff')
+                    else:
+                        # return HttpResponse(signup_form.errors)
+                        messages.error(request, 'the username already exists!')
+                        return redirect('add_staff')
                 else:
                     messages.error(request, 'Please enter valid information!')
                     return redirect('add_staff')
@@ -831,15 +855,15 @@ def delete_guardian_relation(request, id):
 
 '''
 ///////////////////////
-//   Role     //
+//   Designations     //
 ///////////////////////
 ''' 
 
-def display_roles(request):
+def display_designations(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
-            data = Role.objects.all()
-            return render(request, 'display_roles.html', {'data': data})
+            data = Designation.objects.all()
+            return render(request, 'display_designations.html', {'data': data})
         else:
             messages.warning(request, 'This page is for admin only!')
             return redirect('home')
@@ -847,26 +871,26 @@ def display_roles(request):
         messages.warning(request, 'please login first!')
         return redirect('login')
 
-def add_role(request):
+def add_designation(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             if request.method == 'GET':
-                form = AddRoleForm()
-                return render(request, 'add_role.html', {'form': form})
+                form = AddDesignationForm()
+                return render(request, 'add_designation.html', {'form': form})
             else:
-                form = AddRoleForm(request.POST)
-                check_existence = Role.objects.filter(name=request.POST['name']).first()
+                form = AddDesignationForm(request.POST)
+                check_existence = Designation.objects.filter(name=request.POST['name']).first()
                 if check_existence:
-                    messages.error(request, 'Role you entered already exists')
-                    return redirect('add_role')
+                    messages.error(request, 'Designation you entered already exists')
+                    return redirect('add_designation')
                 else:
                     if form.is_valid():
                         form.save()
-                        messages.success(request, 'New Role added successfully')
-                        return redirect('display_roles')
+                        messages.success(request, 'New designation added successfully')
+                        return redirect('display_designations')
                     else:
                         messages.error(request, 'Invalid entry! Please enter the valid entry.')
-                        return redirect('add_role')
+                        return redirect('add_designation')
         else:
             messages.warning(request, 'This page is for admin only!')
             return redirect('home')
@@ -874,22 +898,22 @@ def add_role(request):
         messages.warning(request, 'please login first!')
         return redirect('login')
 
-def edit_role(request, id):
+def edit_designation(request, id):
     if request.user.is_authenticated:
         if request.user.is_superuser:
-            current_role = Role.objects.get(pk=id)
+            current_designation = Designation.objects.get(pk=id)
             if request.method == 'GET':
-                form = AddRoleForm(instance=current_role)
-                return render(request, 'edit_role.html', {'form':form,'id':id})
+                form = AddDesignationForm(instance=current_designation)
+                return render(request, 'edit_designation.html', {'form':form,'id':id})
             else:
-                form = AddRoleForm(request.POST,instance=current_role)
+                form = AddDesignationForm(request.POST,instance=current_designation)
                 if form.is_valid():
                     form.save()
-                    messages.success(request, 'Role updated successfully!')
-                    return redirect('display_roles')
+                    messages.success(request, 'Designation updated successfully!')
+                    return redirect('display_designations')
                 else:
                     messages.error(request, 'Invalid entry please try again!')
-                    return redirect('edit_role', id=id)
+                    return redirect('edit_designation', id=id)
         else:
             messages.warning(request, 'This page is for admin only!')
             return redirect('home')
@@ -897,13 +921,13 @@ def edit_role(request, id):
         messages.warning(request, 'please login first!')
         return redirect('login')
 
-def delete_role(request, id):
+def delete_designation(request, id):
     if request.user.is_authenticated:
         if request.user.is_superuser:
-            current_role = Role.objects.get(id=id)
-            current_role.delete()
-            messages.success(request, 'Role deleted successfully!')
-            return redirect('display_roles')
+            current_designation = Designation.objects.get(id=id)
+            current_designation.delete()
+            messages.success(request, 'Designation deleted successfully!')
+            return redirect('display_designations')
         else:
             messages.warning(request, 'This page is for admin only!')
             return redirect('home')
