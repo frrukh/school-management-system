@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block 'style' %}
+
+{% endblock %}
+{% block 'title' %} Timings {% endblock %}
+{% block 'content' %}
+    <div class="container-fluid">
+        <div class="container my-5 d-flex align-items-center justify-content-between">
+            <h1>Timings</h1>
+            <a href="{% url 'add_timing' %}" class="btn btn-success">Add Period</a>
+        </div>
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for period in data %}
+                    <tr>
+                        <th>{{period.id}}</th>
+                        <td>{{period.period_name}}</td> 
+                        <td>{{period.period_from}}</td> 
+                        <td>{{period.period_to}}</td> 
+                        <td>
+                            <a style="color: transparent;" href="{% url 'edit_timing' period.id %}">
+                                <i class="fa-solid fa-pen fs-5 text-secondary"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

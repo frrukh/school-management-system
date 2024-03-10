@@ -17,8 +17,13 @@ class StudentRequestForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     phone = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     emergency_phone = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    previous_school = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    previous_school = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Optional'}))
 
     class Meta:
         model = StudentApplication
-        fields = ('__all__')
+        fields = ('first_name', 'last_name', 'username', 'grade', 'age', 'gender', 'dob', 'guardian_name', 'guardian_relation', 'address', 'email', 'phone', 'emergency_phone', 'previous_school')
+
+
+
+
+

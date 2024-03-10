@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Gender, Grade, GuardianRelation,Student, Designation, Subject, EmploymentStatus, Staff, ClassAndTiming, Staff, ClassIncharge, FAQs, StudentApplication
+from .models import Gender, Grade, GuardianRelation,Student, Designation, Subject, EmploymentStatus, Staff, ClassAndTiming, Staff, ClassIncharge, FAQs, StudentApplication, Timing
 # Register your models here.
 
 '''
@@ -57,13 +57,26 @@ admin.site.register(Staff, StaffAdmin)
 
 
 '''
+//////////////////
+//   Timing     //
+//////////////////
+'''
+
+class TimingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'period_name', 'period_from', 'period_to')
+
+admin.site.register(Timing, TimingAdmin)
+
+
+
+'''
 ///////////////////////////
 //   ClassAndTime     //
 ///////////////////////////
 '''
 
 class ClassAndTimingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'class_name', 'period_one_subject', 'period_one_teacher', 'period_two_subject', 'period_two_subject', 'period_three_subject', 'period_three_teacher', 'period_four_subject', 'period_four_teacher', 'period_five_subject', 'period_five_teacher', 'period_six_subject', 'period_six_teacher', 'period_seven_subject', 'period_seven_teacher', 'status')
+    list_display = ('id', 'class_name', 'period_one', 'period_one_subject', 'period_one_teacher', 'period_two', 'period_two_subject', 'period_two_subject', 'period_three', 'period_three_subject', 'period_three_teacher', 'period_four', 'period_four_subject', 'period_four_teacher', 'period_five', 'period_five_subject', 'period_five_teacher', 'period_six', 'period_six_subject', 'period_six_teacher', 'period_seven', 'period_seven_subject', 'period_seven_teacher', 'status')
 
 
 class ClassInchargeAdmin(admin.ModelAdmin):

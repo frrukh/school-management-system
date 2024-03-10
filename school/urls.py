@@ -49,6 +49,13 @@ urlpatterns = [
     path('grades/edit/<int:id>/', views.edit_grade, name='edit_grade'),
     path('grades/delete/<int:id>/', views.delete_grade, name='delete_grade'),
 
+    # Timing
+    # ----------------------------------------------------------------
+    path('timing/display/', views.display_timing, name='display_timings'),
+    path('timing/add/', views.add_timing, name='add_timing'),
+    path('timing/edit/<int:id>/', views.edit_timing, name='edit_timing'),
+    path('timing/delete/<int:id>/', views.delete_timing, name='delete_timing'),
+
 
     # Classes and Timings
     # ----------------------------------------------------------------
@@ -59,7 +66,6 @@ urlpatterns = [
     path('classes/add/', views.add_class, name='add_class'),
     path('class/edit/<int:id>/', views.edit_class, name='edit_class'),
     path('class/delete/<int:id>/', views.delete_class, name='delete_class'),
-
 
     # Class Incharges
     # ------------------------------------------------------------------

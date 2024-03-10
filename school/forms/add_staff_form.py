@@ -11,7 +11,7 @@ class AddStaffForm(forms.ModelForm):
     gender = forms.ModelChoiceField(queryset=Gender.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
     qualification = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'form-control'})) 
     experience = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'form-control'})) 
-    Designation = forms.ModelChoiceField(queryset=Designation.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+    designation = forms.ModelChoiceField(queryset=Designation.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
     subject = forms.ModelChoiceField(queryset=Subject.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     phone = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))

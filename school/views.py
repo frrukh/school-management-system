@@ -7,7 +7,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 # models
-from .models import Student, Staff, Grade, Gender, Designation, Subject, EmploymentStatus, ClassAndTiming, GuardianRelation, ClassIncharge, FAQs, StudentApplication
+from .models import Student, Staff, Grade, Gender, Designation, Subject, EmploymentStatus, ClassAndTiming, GuardianRelation, ClassIncharge, FAQs, StudentApplication, Timing
 from django.contrib.auth.models import User
 
 # forms
@@ -23,6 +23,7 @@ from .forms.add_guardian_relation_form import AddGuardianRelationForm
 from .forms.add_designation import AddDesignationForm
 from .forms.add_subject_form import AddSubjectForm
 from .forms.student_request import StudentRequestForm
+from .forms.add_timing import AddTimingForm
 
 
 from django.contrib.auth import login, logout, authenticate 
@@ -117,6 +118,7 @@ def portal(request):
     else:
         messages.warning(request, 'please login first!')
         return redirect('login')
+
 '''
 ///////////////////////
 //   Students     //
@@ -381,12 +383,12 @@ def add_staff(request):
 def edit_staff(request, id):
     if request.user.is_authenticated:
         if request.user.is_superuser:
-            current_employ = get_object_or_404(Staff, pk=id)
+            current_employ = Staff.objects.get(pk=id)
             if request.method == 'GET':
                 form = AddStaffForm(instance=current_employ)
                 return render(request, 'edit_staff.html', {'form':form, 'id':id})
             else:
-                form = AddStaffForm(request.POST)
+                form = AddStaffForm(request.POST, instance=current_employ)
                 if form.is_valid():
                     form.save()
                     messages.success(request, f'Employ {id} has been updated successfully!')
@@ -414,6 +416,52 @@ def delete_staff(request, id):
     else:
         messages.warning(request, 'please login first!')
         return redirect('login')
+
+
+'''
+//////////////////
+//   timing     //
+//////////////////
+'''
+
+def display_timing(request):
+    data = Timing.objects.all()
+    return render(request, 'display_timing.html', { 'data':data })
+
+def add_timing(request):
+    if request.method == 'GET':
+        form = AddTimingForm()
+        return render(request, 'add_timing.html', { 'form':form })
+    else:
+        form = AddTimingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'New Timing added successfully!')
+            return redirect('display_timings')
+        else:
+            messages.error(request, 'Invalid entries! Please enter the valid entries')
+            return redirect('add_timing')
+
+def edit_timing(request, id):
+    current_timing = Timing.objects.get(pk=id)
+    if request.method == 'GET':
+        form = AddTimingForm(instance=current_timing)
+        return render(request, 'edit_timing.html', { 'form':form, 'id':id })
+    else:
+        form = AddTimingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Timing updated successfully!')
+            return redirect('display_timings')
+        else:
+            messages.error(request, 'Invalid entries! Please enter the valid entries')
+            return redirect('edit_timing', id=id)
+
+def delete_timing(request, id):
+    current_timings = Timing.objects.get(id=id)
+    current_timings.delete()
+    messages.success(request, 'Timing deleted successfully')
+    return redirect('display_timings')
 
 '''
 //////////////////////////////////////
